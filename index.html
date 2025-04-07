@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon P. - Kreatives Grafikdesign Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <!-- GSAP für komplexere Animationen (optional) -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> -->
+</head>
+<body>
+    <!-- Cursor Follower Elemente -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header class="site-header">
+        <div class="logo-simple">S/P</div>
+    </header>
+
+    <main>
+        <!-- Hero Sektion -->
+        <section id="hero" class="section hero-section">
+            <div class="hero-content">
+                <div class="hero-text-wrapper">
+                    <h1 class="name-title hero-name" data-depth="0.1">SIMON</h1>
+                    <h1 class="name-title surname hero-name" data-depth="0.15">P.</h1>
+                </div>
+                 <p class="subtitle" data-animate="fade-up" data-delay="0.2">Grafikdesigner & Visueller Stratege</p>
+            </div>
+            <div class="scroll-indicator" data-animate="fade-up" data-delay="0.5">
+                <iconify-icon icon="ph:arrow-down"></iconify-icon>
+            </div>
+        </section>
+
+        <!-- Lebendiger Divider 1 -->
+        <div class="divider">
+             <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="wave wave-1" d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 V120 H0 Z"></path>
+                <path class="wave wave-2" d="M0,70 C288,140 576,0 864,70 C1152,140 1440,0 1440,70 V120 H0 Z"></path>
+            </svg>
+        </div>
+
+        <!-- Portfolio Sektion -->
+        <section id="portfolio" class="section portfolio-section">
+            <h2 class="section-title" data-animate="fade-right">Ausgewählte <br>Projekte</h2>
+            <div class="portfolio-grid">
+                 <!-- Portfolio Item 1 -->
+                <article class="portfolio-item" data-animate="fade-up">
+                    <div class="portfolio-image-wrapper">
+                         <img src="https://images.pexels.com/photos/3184454/pexels-photo-3184454.jpeg?auto=compress&cs=tinysrgb&w=600&h=750" alt="Projekt Alpha">
+                         <div class="preview-window">
+                             <img src="https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg?auto=compress&cs=tinysrgb&w=300&h=200" alt="Projekt Alpha Preview">
+                             <span>Detailansicht</span>
+                         </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Brand Identity Redesign</h3>
+                        <p>Kunde X</p>
+                    </div>
+                </article>
+                <!-- Portfolio Item 2 -->
+                 <article class="portfolio-item" data-animate="fade-up" data-delay="0.1">
+                     <div class="portfolio-image-wrapper">
+                         <img src="https://images.pexels.com/photos/1181345/pexels-photo-1181345.jpeg?auto=compress&cs=tinysrgb&w=600&h=750" alt="Projekt Beta">
+                         <div class="preview-window">
+                             <img src="https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=300&h=200" alt="Projekt Beta Preview">
+                             <span>Web Layout</span>
+                         </div>
+                     </div>
+                    <div class="portfolio-info">
+                        <h3>Interaktives Web-Erlebnis</h3>
+                        <p>Startup Y</p>
+                    </div>
+                </article>
+                <!-- Portfolio Item 3 -->
+                 <article class="portfolio-item" data-animate="fade-up" data-delay="0.2">
+                     <div class="portfolio-image-wrapper">
+                         <img src="https://images.pexels.com/photos/416405/pexels-photo-416405.jpeg?auto=compress&cs=tinysrgb&w=600&h=750" alt="Projekt Gamma">
+                         <div class="preview-window">
+                             <img src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=300&h=200" alt="Projekt Gamma Preview">
+                             <span>Typografie Detail</span>
+                         </div>
+                     </div>
+                     <div class="portfolio-info">
+                        <h3>Buchgestaltung & Layout</h3>
+                        <p>Verlag Z</p>
+                    </div>
+                </article>
+                <!-- Portfolio Item 4 -->
+                 <article class="portfolio-item" data-animate="fade-up" data-delay="0.3">
+                     <div class="portfolio-image-wrapper">
+                         <img src="https://images.pexels.com/photos/57690/pexels-photo-57690.jpeg?auto=compress&cs=tinysrgb&w=600&h=750" alt="Projekt Delta">
+                         <div class="preview-window">
+                              <img src="https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=300&h=200" alt="Projekt Delta Preview">
+                             <span>UI Elemente</span>
+                         </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Mobile App UI Konzeption</h3>
+                        <p>Tech Company A</p>
+                    </div>
+                </article>
+                 <!-- Portfolio Item 5 -->
+                 <article class="portfolio-item" data-animate="fade-up" data-delay="0.4">
+                     <div class="portfolio-image-wrapper">
+                          <img src="https://images.pexels.com/photos/6476783/pexels-photo-6476783.jpeg?auto=compress&cs=tinysrgb&w=600&h=750" alt="Projekt Epsilon">
+                          <div class="preview-window">
+                              <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=300&h=200" alt="Projekt Epsilon Preview">
+                             <span>Mockup</span>
+                          </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>Editorial Design</h3>
+                        <p>Magazin B</p>
+                    </div>
+                </article>
+                 <!-- Portfolio Item 6 -->
+                 <article class="portfolio-item" data-animate="fade-up" data-delay="0.5">
+                     <div class="portfolio-image-wrapper">
+                          <img src="https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=600&h=750" alt="Projekt Zeta">
+                          <div class="preview-window">
+                              <img src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=300&h=200" alt="Projekt Zeta Preview">
+                             <span>Workflow</span>
+                          </div>
+                    </div>
+                    <div class="portfolio-info">
+                        <h3>App Prototyping</h3>
+                        <p>Kunde C</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Lebendiger Divider 2 (Angepasst für Dark -> Dark Übergang) -->
+        <div class="divider divider-reverse">
+             <!-- Einfachere, einzelne Welle für Dark-to-Dark -->
+             <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                 <path class="wave wave-3" d="M0,40 Q360,80 720,40 T1440,40 V80 H0 Z"></path>
+             </svg>
+        </div>
+
+        <!-- Über Mich Sektion -->
+        <section id="about" class="section about-section" data-texture="https://images.pexels.com/photos/1089930/pexels-photo-1089930.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2">
+             <div class="about-content">
+                <h2 class="section-title inverted" data-animate="fade-left">Der Kopf<br>dahinter.</h2>
+                <div class="skills-icons" data-animate="fade-up" data-delay="0.1">
+                    <div class="skill-item" data-animate="pop-in" data-delay="0.2">
+                        <iconify-icon icon="ph:pen-nib-bold"></iconify-icon>
+                        <span>Konzept & Idee</span>
+                    </div>
+                    <div class="skill-item" data-animate="pop-in" data-delay="0.3">
+                        <iconify-icon icon="ph:paint-brush-household-bold"></iconify-icon>
+                        <span>Visuelles Design</span>
+                    </div>
+                    <div class="skill-item" data-animate="pop-in" data-delay="0.4">
+                        <iconify-icon icon="ph:strategy-bold"></iconify-icon>
+                        <span>Markenstrategie</span>
+                    </div>
+                     <div class="skill-item" data-animate="pop-in" data-delay="0.5">
+                         <iconify-icon icon="ph:device-mobile-camera-bold"></iconify-icon>
+                         <span>Digital & UI</span>
+                    </div>
+                </div>
+                <div class="about-text" data-animate="fade-up" data-delay="0.6">
+                    <p>Ich bin Simon. Mein Ziel ist es, Design zu schaffen, das nicht nur gut aussieht, sondern auch funktioniert und eine Geschichte erzählt. Ich glaube an die Kraft klarer Ideen und mutiger visueller Umsetzungen.</p>
+                </div>
+             </div>
+        </section>
+
+        <!-- Lebendiger Divider 3 (Korrigierte Form für Dark -> Light Übergang) -->
+         <div class="divider divider-contact-top">
+             <!-- Einfachere Welle, die nach UNTEN zeigt (aus Dark kommend) -->
+             <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                 <path class="wave wave-5" d="M0,40 Q360,0 720,40 T1440,40 V80 H0 Z"></path>
+             </svg>
+        </div>
+
+
+        <!-- Kontakt Sektion -->
+        <section id="contact" class="section contact-section">
+            <h2 class="section-title contact-title" data-animate="fade-up">Let's<br>Connect.</h2>
+            <div class="contact-info" data-animate="fade-up" data-delay="0.2">
+                <!-- Text jetzt zentriert -->
+                <p class="contact-prompt">Bereit für das nächste Projekt?</p>
+                <a href="mailto:hallo@simonp-design.de" class="contact-link">hallo@simonp-design.de</a>
+                <div class="social-icons-contact">
+                    <a href="#" aria-label="LinkedIn" data-animate="pop-in" data-delay="0.4"><iconify-icon icon="mdi:linkedin"></iconify-icon></a>
+                    <a href="#" aria-label="Behance" data-animate="pop-in" data-delay="0.5"><iconify-icon icon="mdi:behance"></iconify-icon></a>
+                    <a href="#" aria-label="Instagram" data-animate="pop-in" data-delay="0.6"><iconify-icon icon="mdi:instagram"></iconify-icon></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© <span id="year"></span> Simon P. Kreatives Design.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
