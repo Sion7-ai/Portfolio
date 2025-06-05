@@ -692,16 +692,21 @@
         #vacation-popup-content {
             background-color: var(--background-light);
             color: var(--primary-color);
-            padding: 30px 35px 35px 35px;
+            padding: 30px; /* Einheitliches Padding */
             border-radius: 16px;
             text-align: center;
             position: relative;
-            max-width: 90%;
-            width: 480px; 
+            width: 90vw; /* Responsive Breite */
+            max-width: 900px; /* Vergrößert für breiteres Bild und 3:2 Ratio */
+            aspect-ratio: 3 / 2; /* Seitenverhältnis 3:2 */
             box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
             transform: scale(0.9) translateY(20px);
             opacity: 0;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease-out;
+            display: flex; /* Für interne Ausrichtung */
+            flex-direction: column;
+            justify-content: center; /* Inhalt vertikal zentrieren */
+            align-items: center; /* Inhalt horizontal zentrieren */
         }
 
         #vacation-popup-overlay.visible #vacation-popup-content {
@@ -728,21 +733,28 @@
         }
 
         #vacation-popup-content .image-frame {
-            display: inline-block;
-            padding: 10px;
-            border: 4px solid var(--kome-blue);
-            border-radius: 12px; 
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            padding: 8px; 
+            border: 3px solid var(--kome-blue);
+            border-radius: 10px; 
             background-color: var(--light-gray);
-            margin-bottom: 25px;
+            margin-bottom: 20px; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 90%; /* Responsive Breite für kleinere Bildschirme */
+            max-width: 722px; /* (700px Bild + 2*8px Padding + 2*3px Border) */
+            max-height: 80%; 
+            overflow: hidden; 
         }
 
         #vacation-popup-content img {
             display: block;
             max-width: 100%;
-            width: 300px; 
-            height: 300px;
-            object-fit: cover;
+            max-height: 100%; 
+            width: auto; /* Wird durch Frame und object-fit gesteuert */
+            height: auto; /* Wird durch Frame und object-fit gesteuert */
+            object-fit: contain; /* Stellt sicher, dass das gesamte Bild sichtbar ist */
             border-radius: 6px; 
         }
 
@@ -863,23 +875,26 @@
 
             /* Vacation Popup auf kleineren Bildschirmen */
             #vacation-popup-content {
-                width: calc(100% - 40px); /* Etwas Rand lassen */
-                padding: 25px 20px 30px 20px;
+                width: 90vw; /* Beibehaltung der responsiven Breite */
+                padding: 20px; /* Angepasstes Padding */
+                /* aspect-ratio wird vom Hauptstil übernommen */
+            }
+            #vacation-popup-content .image-frame {
+                 max-height: 65%; /* Höhe des Bildrahmens anpassen für Textplatz */
+                 margin-bottom: 15px;
+                 /* max-width wird vom Hauptstil geerbt und ggf. durch width: 90% reduziert */
             }
             #vacation-popup-content img {
-                width: 220px;
-                height: 220px;
+                /* Stile werden vom Hauptstil übernommen, object-fit: contain skaliert passend */
             }
              #vacation-popup-content p {
-                font-size: 1.1em;
+                font-size: 1.05em; /* Leicht angepasst */
             }
             #vacation-popup-close {
                 font-size: 2.5em;
                 top: 8px;
                 right: 8px;
             }
-
-
         }
 
         @media (max-width: 480px) {
@@ -902,12 +917,14 @@
                 max-width: 100px; 
             }
 
+             #vacation-popup-content .image-frame {
+                 max-height: 60%; /* Höhe des Bildrahmens weiter anpassen für Textplatz */
+            }
              #vacation-popup-content img {
-                width: 180px;
-                height: 180px;
+                /* Stile werden vom Hauptstil übernommen, object-fit: contain skaliert passend */
             }
              #vacation-popup-content p {
-                font-size: 1em;
+                font-size: 0.95em; /* Leicht angepasst */
             }
         }
     </style>
