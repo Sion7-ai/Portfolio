@@ -3,186 +3,1384 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simon P. - Grafikdesign Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <title>Simon Design - Design mit Haltung. Strategisch. Klar. KI-gestützt.</title>
+
+    <!-- Google Fonts: Playfair Display (Serif für Headlines), Inter (Sans-Serif für Body/Nav) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Anime.js (CDN) für komplexe Animationen -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- Iconify (CDN) für Icons -->
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+
+    <style>
+        /* Globale Stile & Farbpalette */
+        :root {
+            --kome-blue: #0000FF;
+            --kome-blue-dark: #0000CC; /* Slightly darker for hover */
+            --white: #FFFFFF;
+            --black: #000000;
+            --light-gray: #F0F0F8; /* For subtle backgrounds */
+            --hover-background: #E0E0FF; /* Lighter blue for interaction */
+            --primary-color: var(--black);
+            --accent-color: var(--kome-blue);
+            --secondary-color: #64748B; /* Still useful for text contrast */
+            --background-light: var(--white);
+            --background-dark: var(--black); /* Changed to black for contrast */
+            --text-light: var(--white); /* Text on dark backgrounds */
+            --border-color: #CBD5E1;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-dark: rgba(0, 0, 0, 0.4);
+            --header-height-desktop: 80px; /* Variable für Header-Höhe */
+            --header-height-mobile: 60px; /* Variable für Header-Höhe Mobile */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary-color);
+            background-color: transparent; /* Body background now transparent to show waveform */
+            cursor: none; /* Hide default cursor */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            padding-top: var(--header-height-desktop); /* Platz für den fixierten Header */
+        }
+
+        /* Custom Cursor */
+        .custom-cursor-dot, .custom-cursor-ring {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.1s ease, transform 0.1s ease-out, background-color 0.3s ease, border-color 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .custom-cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--kome-blue);
+        }
+
+        .custom-cursor-ring {
+            width: 36px;
+            height: 36px;
+            border: 2px solid var(--kome-blue);
+        }
+
+        .custom-cursor-dot.visible, .custom-cursor-ring.visible {
+            opacity: 1;
+        }
+
+        .custom-cursor-dot.hover {
+            background-color: var(--kome-blue-dark);
+            transform: translate(-50%, -50%) scale(1.8);
+        }
+        .custom-cursor-ring.hover {
+            border-color: var(--kome-blue-dark);
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        a, button, input[type="range"], .service-item, .case-study-item, .music-player-control-button {
+            cursor: none !important;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        section {
+            padding: 100px 0;
+            overflow: hidden; /* Beibehalten, aber sicherstellen, dass Inhalte nicht unnötig abgeschnitten werden */
+            position: relative; /* Wichtig für z-index Kontext mit transparentem Hintergrund */
+            z-index: 1; /* Sicherstellen, dass Sektionen über Hintergrund-Canvas liegen */
+            background-color: transparent;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        h1 {
+            font-size: 5em;
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-size: 3.5em;
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 6px;
+            background-color: var(--kome-blue);
+            margin: 30px auto 0;
+            border-radius: 3px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        p.intro-text {
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 60px;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+        }
+
+
+        a.button {
+            display: inline-block;
+            padding: 16px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow-light);
+        }
+
+        a.button-primary {
+            background-color: var(--kome-blue);
+            color: var(--white);
+        }
+
+        a.button-primary:hover {
+            background-color: var(--kome-blue-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 255, 0.2);
+        }
+
+        a.button-secondary {
+            background-color: transparent;
+            color: var(--kome-blue);
+            border: 2px solid var(--kome-blue);
+            margin-left: 20px;
+        }
+
+        a.button-secondary:hover {
+            background-color: var(--kome-blue);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 255, 0.2);
+        }
+        .button-wrapper {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* Header */
+        #main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            height: var(--header-height-desktop);
+            padding: 0 40px; /* Vertikales Padding durch align-items und Höhe geregelt */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        #main-header.sticky {
+            background-color: var(--kome-blue);
+            color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #main-header .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--black);
+            text-decoration: none;
+            transition: color 0.4s ease;
+        }
+        #main-header.sticky .logo {
+            color: var(--white);
+        }
+
+        #main-header .nav-links a {
+            color: var(--black);
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+        #main-header.sticky .nav-links a {
+            color: var(--white);
+        }
+
+        #main-header .nav-links a:hover {
+            color: var(--kome-blue);
+        }
+        #main-header.sticky .nav-links a:hover {
+            color: var(--light-gray);
+        }
+
+        /* Hamburger Menu (Mobile) */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 10px; /* Mehr Klickfläche */
+        }
+        .hamburger-menu span {
+            width: 30px;
+            height: 3px;
+            background-color: var(--black);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        #main-header.sticky .hamburger-menu span {
+            background-color: var(--white);
+        }
+        .hamburger-menu.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger-menu.open span:nth-child(2) { opacity: 0; }
+        .hamburger-menu.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0; /* Startet unter dem Header, wenn Header sichtbar */
+            left: 0;
+            width: 100%;
+            height: 100%; /* Volle Höhe */
+            padding-top: var(--header-height-mobile); /* Platz für Header im Mobile Nav */
+            background-color: var(--kome-blue);
+            z-index: 99; /* Unter dem Header, aber über dem Content */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            transform: translateX(100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out, visibility 0s 0.4s; /* Visibility erst nach Transition */
+        }
+        .mobile-nav.open {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out, visibility 0s 0s;
+        }
+        .mobile-nav a {
+            color: var(--white);
+            font-size: 1.8em;
+            text-decoration: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Canvas für den Audio-Visualizer im Hintergrund */
+        #audioVisualizer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            filter: blur(0.5px);
+            transition: opacity 0.5s ease;
+        }
+
+        /* Glitch Effect Overlay */
+        .glitch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            animation: subtle-glitch 8s infinite step-end;
+        }
+
+        @keyframes subtle-glitch {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; filter: none; background-color: transparent; }
+            1% { transform: translate(1px, 1px) scale(1.002); opacity: 0.05; filter: blur(0.5px) brightness(1.1); background-color: rgba(0, 0, 255, 0.01); }
+            1.1% { transform: translate(0, 0) scale(1); opacity: 0; filter: none; background-color: transparent; }
+            5% { transform: translate(-1px, -1px) scale(1.002); opacity: 0.05; filter: blur(0.5px) contrast(1.05); background-color: rgba(0, 0, 255, 0.01); }
+            5.1% { transform: translate(0, 0) scale(1); opacity: 0; filter: none; background-color: transparent; }
+            20% { opacity: 0; }
+            20.1% { transform: translate(0.5px, 0.5px); opacity: 0.03; filter: brightness(1.05); background-color: rgba(0, 0, 255, 0.005);}
+            20.2% { opacity: 0; }
+            45% { opacity: 0; }
+            45.1% { transform: translate(-0.5px, 0.5px); opacity: 0.03; filter: saturate(1.1); background-color: rgba(0, 0, 255, 0.005);}
+            45.2% { opacity: 0; }
+        }
+
+        /* Hero Sektion */
+        #hero {
+            min-height: calc(100vh - var(--header-height-desktop)); /* Volle Viewport-Höhe minus Header */
+            display: flex;
+            align-items: center; /* Vertikal zentrieren */
+            justify-content: center; /* Horizontal zentrieren */
+            text-align: center; /* Text zentrieren für Fallback falls Flex nicht greift */
+            padding: 60px 20px; /* Innenabstand, falls Inhalt die Höhe überschreitet */
+        }
+        #hero .hero-content {
+            max-width: 900px; /* Maximale Breite des Hero-Inhalts */
+        }
+        #hero h1 {
+            font-size: 4.5em; /* Leicht angepasst für bessere Skalierung */
+            margin-bottom: 0.5em;
+        }
+        #hero .subline {
+            font-size: 1.5em;
+            color: var(--secondary-color);
+            margin-bottom: 1.5em;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #hero .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap; /* Umbruch bei Bedarf */
+        }
+
+
+        /* Grid-Layouts für Sektionen */
+        .services-grid,
+        .principles-grid,
+        .references-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        /* Desktop: 3 Spalten */
+        .services-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsives Grid */
+        }
+        .principles-grid {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Responsives Grid */
+        }
+        .references-grid {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Responsives Grid */
+        }
+
+
+        /* Styling für die Cards */
+        #services .service-item,
+        #methodology .principle-item,
+        #references .case-study-item {
+            background-color: var(--light-gray);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            text-align: center;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-start;
+            align-items: center; /* Hinzugefügt für Zentrierung der Flex-Items (Icons etc.) */
+        }
+        #references .case-study-item {
+            text-align: left; /* Linksbündig für Fallstudien-Textinhalt */
+             /* align-items: initial; /* Optional: Wenn Case-Study-Items nicht zentriert sein sollen */
+        }
+
+        #methodology .principle-item {
+            background-color: var(--white);
+        }
+
+        /* Hover-Zustände für Cards */
+        #services .service-item:hover,
+        #methodology .principle-item:hover,
+        #references .case-study-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            background-color: var(--hover-background);
+        }
+
+        #services .service-item .icon {
+            font-size: 3.5em;
+            color: var(--kome-blue);
+            margin-bottom: 20px;
+            display: inline-block; /* Beibehalten, da align-items auf Parent wirkt */
+            transition: transform 0.3s ease;
+        }
+
+        #services .service-item:hover .icon {
+            transform: rotateY(15deg) scale(1.1);
+        }
+
+        #services .service-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        #services .service-item p {
+            font-size: 0.95em;
+            color: var(--secondary-color);
+            margin-bottom: 0;
+            flex-grow: 1; /* P soll verfügbaren Platz füllen */
+        }
+
+        /* Beispiele & Referenzen */
+        #references .case-study-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            border-radius: 8px 8px 0 0; /* Abgerundete Ecken oben */
+            transition: transform 0.5s ease;
+            margin-bottom: 20px; /* Abstand zum Text */
+        }
+        #references .case-study-item:hover img {
+            transform: scale(1.05);
+        }
+        #references .case-study-content {
+            padding: 0; 
+        }
+        #references .case-study-content h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+         #references .case-study-content strong {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+         }
+        #references .case-study-content p {
+            font-size: 0.9em;
+            color: var(--secondary-color);
+            margin-bottom: 0;
+        }
+
+
+        /* Über Mich Sektion */
+        #about .about-content {
+            display: flex;
+            flex-direction: column; /* Standard für mobile */
+            align-items: center;
+            gap: 30px;
+            text-align: center; /* Text zentrieren für mobile */
+        }
+        #about .about-content img.circle-image {
+            width: 200px; /* Feste Größe für das Bild */
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 8px 25px var(--shadow-light);
+        }
+        #about .about-content p {
+            font-size: 1.1em;
+            max-width: 650px; /* Maximale Breite des Textes */
+            color: var(--primary-color);
+            line-height: 1.7;
+        }
+
+        /* Kontakt Sektion */
+        #contact .container {
+            text-align: center;
+        }
+        #contact h2 {
+            font-size: 2.8em; /* Größer für CTA */
+        }
+         #contact .subline {
+            font-size: 1.3em;
+            color: var(--secondary-color);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #contact .button {
+            font-size: 1.1em;
+        }
+
+
+        /* Footer */
+        footer {
+            background-color: var(--black);
+            color: var(--white);
+            padding: 50px 40px; /* Mehr Padding */
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative; /* Für z-index, falls nötig */
+            z-index: 2; /* Über Canvas, falls es überlappt */
+        }
+
+        footer .footer-nav {
+            display: flex;
+            flex-wrap: wrap; /* Umbruch bei Bedarf */
+            justify-content: center; /* Zentrieren bei Umbruch */
+            gap: 15px; /* Abstand zwischen Links */
+        }
+        footer .footer-nav a {
+            color: var(--white);
+            text-decoration: none;
+            margin: 0 10px; /* Horizontaler Abstand */
+            transition: color 0.3s ease;
+            font-size: 0.95em;
+        }
+        footer .footer-nav a:hover {
+            color: var(--kome-blue);
+        }
+        footer .button-primary-footer {
+            background-color: var(--kome-blue);
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 255, 0.2);
+        }
+        footer .button-primary-footer:hover {
+            background-color: var(--kome-blue-dark);
+            transform: translateY(-2px);
+        }
+        footer .copyright {
+            color: var(--secondary-color);
+            width: 100%; /* Volle Breite für Zentrierung bei Umbruch */
+            margin-top: 20px; /* Abstand nach oben bei Umbruch */
+            font-size: 0.85em;
+        }
+
+
+        /* Sticky Music Player Controls */
+        #sticky-music-player-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0,0,0,0.85); /* Leichte Transparenz */
+            color: var(--white);
+            padding: 12px 18px; /* Etwas kompakter */
+            border-radius: 50px; /* Pill-Shape */
+            box-shadow: 0 8px 25px var(--shadow-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px; /* Angepasster Abstand */
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(120%); /* Weiter raus für Animation */
+            transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        #sticky-music-player-controls.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        #sticky-music-player-controls button {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            font-size: 1.6em; /* Etwas kleiner */
+            padding: 8px; /* Bessere Klickfläche */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease, transform 0.2s ease;
+            border-radius: 50%; /* Runde Buttons */
+        }
+        #sticky-music-player-controls button:hover {
+            color: var(--kome-blue);
+            background-color: rgba(255,255,255,0.1); /* Leichter Hover-Effekt */
+            transform: scale(1.1);
+        }
+
+        #sticky-music-player-controls input[type="range"] {
+            width: 80px; /* Etwas kürzer */
+            -webkit-appearance: none;
+            appearance: none; /* Standard-Aussehen entfernen */
+            height: 6px; /* Dünnerer Track */
+            border-radius: 3px;
+            background: var(--secondary-color);
+            outline: none;
+            transition: background 0.2s ease;
+            cursor: pointer;
+            vertical-align: middle; /* Bessere Ausrichtung mit Buttons */
+        }
+
+        #sticky-music-player-controls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px; /* Kleinerer Thumb */
+            height: 16px;
+            border-radius: 50%;
+            background: var(--kome-blue);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s ease;
+        }
+        #sticky-music-player-controls input[type="range"]::-webkit-slider-thumb:hover {
+             background-color: var(--kome-blue-dark);
+        }
+
+        #sticky-music-player-controls input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--kome-blue);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: none; /* Wichtig für Firefox */
+            transition: background-color 0.2s ease;
+        }
+         #sticky-music-player-controls input[type="range"]::-moz-range-thumb:hover {
+             background-color: var(--kome-blue-dark);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 1280px) {
+            .container {
+                padding: 0 30px;
+            }
+            #main-header {
+                padding: 0 30px;
+            }
+            h1 { font-size: 4em; }
+            h2 { font-size: 3em; }
+            #hero h1 { font-size: 4em; }
+        }
+
+        @media (max-width: 1024px) {
+            body { padding-top: var(--header-height-mobile); } /* Header-Höhe für Mobile anpassen */
+            #main-header { height: var(--header-height-mobile); }
+            #hero { min-height: calc(100vh - var(--header-height-mobile)); }
+
+            h1 { font-size: 3.2em; }
+            h2 { font-size: 2.5em; }
+            #hero h1 { font-size: 3.2em; }
+            #hero .subline { font-size: 1.3em; }
+
+            #main-header .nav-links { display: none; }
+            .hamburger-menu { display: flex; }
+
+            /* Für About Sektion auf Tablets */
+            #about .about-content {
+                flex-direction: row; /* Bild links, Text rechts */
+                text-align: left;
+                align-items: flex-start; /* Oben ausrichten */
+            }
+            #about .about-content img.circle-image {
+                width: 180px;
+                height: 180px;
+                flex-shrink: 0; /* Verhindert Schrumpfen des Bildes */
+            }
+             #about .about-content p {
+                font-size: 1.05em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            section { padding: 80px 0; } /* Weniger Padding auf Mobile */
+            .container { padding: 0 20px; }
+            #main-header { padding: 0 20px; }
+
+            h1 { font-size: 2.8em; }
+            h2 { font-size: 2.2em; margin-bottom: 60px; }
+            h2::after { width: 60px; height: 4px; margin: 20px auto 0; }
+
+            #hero { padding: 40px 20px; } /* Innenabstand für Hero angepasst */
+            #hero h1 { font-size: 2.8em; }
+            #hero .subline { font-size: 1.15em; }
+            #hero .hero-buttons { flex-direction: column; gap: 15px; align-items: center;}
+            a.button-secondary { margin-left: 0; width: 100%; max-width: 300px; text-align: center; }
+            a.button-primary { width: 100%; max-width: 300px; text-align: center; }
+
+
+            /* Karten in den Sektionen (bleiben bei auto-fit, aber minmax sorgt für Stapeln) */
+            .services-grid,
+            .principles-grid,
+            .references-grid {
+                grid-template-columns: 1fr; /* Explizit eine Spalte für kleinere Screens */
+                gap: 25px;
+            }
+
+             #methodology .principles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #contact h2 { font-size: 2.2em; }
+            #contact .subline { font-size: 1.1em; }
+
+            /* Sticky Player Anpassungen */
+            #sticky-music-player-controls {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 15px;
+                gap: 8px;
+            }
+            #sticky-music-player-controls button { font-size: 1.4em; padding: 6px;}
+            #sticky-music-player-controls input[type="range"] { width: 70px; }
+
+            footer {
+                flex-direction: column;
+                padding: 40px 20px;
+                gap: 30px; /* Mehr Abstand zwischen Elementen im Footer */
+            }
+             footer .footer-nav {
+                flex-direction: column; /* Links untereinander */
+                gap: 15px;
+            }
+            footer .footer-nav a { margin: 0; }
+            footer .copyright { margin-top: 10px; } /* Weniger Margin, da schon durch gap getrennt */
+
+            /* About Sektion wieder auf Spaltenlayout für Mobile */
+            #about .about-content {
+                flex-direction: column;
+                text-align: center;
+                align-items: center; /* Hinzugefügt, um Flex-Items horizontal zu zentrieren */
+            }
+             #about .about-content img.circle-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.2em; }
+            h2 { font-size: 1.8em; margin-bottom: 40px; }
+            #hero h1 { font-size: 2.3em; }
+            #hero .subline { font-size: 1em; }
+
+            .container { padding: 0 15px; }
+            #main-header { padding: 0 15px; }
+
+            /* Sticky Player nimmt fast volle Breite ein */
+            #sticky-music-player-controls {
+                width: calc(100% - 30px); /* Berücksichtigt Padding */
+                left: 15px;
+                right: 15px;
+                justify-content: space-around; /* Elemente besser verteilen */
+            }
+             #sticky-music-player-controls input[type="range"] {
+                flex-grow: 1; /* Slider soll verfügbaren Platz nutzen */
+                max-width: 100px; /* Aber nicht zu breit werden */
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Cursor Follower Elemente -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+    <!-- Custom Cursor Elements -->
+    <div class="custom-cursor-dot"></div>
+    <div class="custom-cursor-ring"></div>
 
-    <header class="site-header">
-        <div class="header-content">
-             <!-- Logo geändert -->
-             <div class="logo-simple">S<span class="logo-p">P.</span></div>
-             <nav class="main-nav">
-                 <ul>
-                     <li><a href="#portfolio">Projekte</a></li>
-                     <li><a href="#about">Kopf</a></li>
-                     <li><a href="#contact">Connect</a></li>
-                 </ul>
-             </nav>
+    <!-- Glitch Effect Overlay - liegt direkt über dem Waveform-Hintergrund -->
+    <div class="glitch-overlay"></div>
+
+    <!-- Audio Element (versteckt, aber für Web Audio API funktional) -->
+    <audio id="myAudio" src="https://sion7-ai.github.io/Spck/test/Simon.exe.mp3" loop crossorigin="anonymous" style="display: none;"></audio>
+
+    <!-- Canvas für den Full-Screen Hintergrund-Audio-Visualizer -->
+    <canvas id="audioVisualizer"></canvas>
+
+    <!-- Header -->
+    <header id="main-header">
+        <a href="#" class="logo interactive-element">SIM.ON</a>
+        <nav class="nav-links">
+            <a href="#services" class="interactive-element">Leistungen</a>
+            <a href="#methodology" class="interactive-element">Arbeitsweise</a>
+            <a href="#references" class="interactive-element">Referenzen</a>
+            <a href="#about" class="interactive-element">Über mich</a>
+            <a href="#contact" class="interactive-element">Kontakt</a>
+        </nav>
+        <div class="hamburger-menu interactive-element">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-        <!-- Header Welle ENTFERNT -->
     </header>
 
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <a href="#services" class="interactive-element">Leistungen</a>
+        <a href="#methodology" class="interactive-element">Arbeitsweise</a>
+        <a href="#references" class="interactive-element">Referenzen</a>
+        <a href="#about" class="interactive-element">Über mich</a>
+        <a href="#contact" class="interactive-element">Kontakt</a>
+    </nav>
+
     <main>
-        <!-- Hero Sektion -->
-        <section id="hero" class="section theme-light hero-section">
-            <div class="hero-content">
-                 <!-- Wrapper für Glitch Effekt -->
-                 <div class="hero-text-wrapper">
-                    <h1 class="name-title hero-name">SIMON<span class="name-p">P.</span></h1>
-                 </div>
-                 <p class="subtitle" data-animate="fade-up" data-delay="0.2">Grafikdesigner & Visueller Stratege</p>
-            </div>
-            <div class="scroll-indicator" data-animate="fade-up" data-delay="0.5">
-                <iconify-icon icon="ph:arrow-down"></iconify-icon>
+        <!-- 1. Hero-Sektion -->
+        <section id="hero">
+            <div class="hero-content container"> <!-- Container hier hinzugefügt für Konsistenz -->
+                <h1 class="stagger-in">Design mit Haltung. Schnell, wenn nötig. Nie überhastet.</h1>
+                <p class="subline stagger-in">Strategisch. Klar. KI-gestützt. Für Marken, die wissen, was sie brauchen.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="button button-primary fade-in-up interactive-element">Projekt anfragen</a>
+                    <a href="#references" class="button button-secondary fade-in-up interactive-element">Referenzen ansehen</a>
+                </div>
             </div>
         </section>
 
-        <!-- Divider 1 ENTFERNT -->
-
-        <!-- Portfolio Sektion -->
-        <section id="portfolio" class="section theme-dark portfolio-section">
-             <div class="section-content-wrapper">
-                <h2 class="section-title portfolio-title" data-animate="fade-right">Ausgewählte <br>Projekte</h2>
-                <div class="portfolio-grid">
-                     <!-- Portfolio Item 1 -->
-                    <article class="portfolio-item" data-animate="fade-up">
-                        <a href="#project-link-1" class="portfolio-link">
-                            <div class="portfolio-image-wrapper">
-                                 <img src="https://cdn.midjourney.com/38d5108a-b7fb-49d8-8787-ae8d0daccbfe/0_1.png" alt="Projekt Alpha">
-                            </div>
-                            <div class="portfolio-info">
-                                <h3>Brand Identity Redesign</h3>
-                                <p>Kunde X</p>
-                            </div>
-                        </a>
-                    </article>
-                    <!-- Portfolio Item 2 -->
-                     <article class="portfolio-item" data-animate="fade-up" data-delay="0.1">
-                         <a href="#project-link-2" class="portfolio-link">
-                             <div class="portfolio-image-wrapper">
-                                 <img src="https://cdn.midjourney.com/57f660f7-a417-4856-b4c6-2773dfee3a35/0_2.png" alt="Projekt Beta">
-                             </div>
-                            <div class="portfolio-info">
-                                <h3>Interaktives Web-Erlebnis</h3>
-                                <p>Startup Y</p>
-                            </div>
-                        </a>
-                    </article>
-                    <!-- Portfolio Item 3 -->
-                     <article class="portfolio-item" data-animate="fade-up" data-delay="0.2">
-                         <a href="#project-link-3" class="portfolio-link">
-                             <div class="portfolio-image-wrapper">
-                                 <img src="https://cdn.midjourney.com/c98ce105-de69-4ccd-84b6-51f067169906/0_1.png" alt="Projekt Gamma">
-                             </div>
-                             <div class="portfolio-info">
-                                <h3>Buchgestaltung & Layout</h3>
-                                <p>Verlag Z</p>
-                            </div>
-                        </a>
-                    </article>
-                    <!-- Portfolio Item 4 -->
-                     <article class="portfolio-item" data-animate="fade-up" data-delay="0.3">
-                         <a href="#project-link-4" class="portfolio-link">
-                             <div class="portfolio-image-wrapper">
-                                 <img src="https://cdn.midjourney.com/636dd1ec-7b75-4af5-b657-67dc4bfef2dc/0_3.png" alt="Projekt Delta">
-                            </div>
-                            <div class="portfolio-info">
-                                <h3>Mobile App UI Konzeption</h3>
-                                <p>Tech Company A</p>
-                            </div>
-                        </a>
-                    </article>
-                     <!-- Portfolio Item 5 -->
-                     <article class="portfolio-item" data-animate="fade-up" data-delay="0.4">
-                         <a href="#project-link-5" class="portfolio-link">
-                             <div class="portfolio-image-wrapper">
-                                  <img src="https://cdn.midjourney.com/e057a368-82bc-4d90-963a-aa3a55743c02/0_2.png" alt="Projekt Epsilon">
-                            </div>
-                            <div class="portfolio-info">
-                                <h3>Editorial Design</h3>
-                                <p>Magazin B</p>
-                            </div>
-                        </a>
-                    </article>
-                     <!-- Portfolio Item 6 -->
-                     <article class="portfolio-item" data-animate="fade-up" data-delay="0.5">
-                         <a href="#project-link-6" class="portfolio-link">
-                             <div class="portfolio-image-wrapper">
-                                  <img src="https://cdn.midjourney.com/f218d692-34ec-43eb-9347-9e15fc0927cb/0_0.png" alt="Projekt Zeta">
-                            </div>
-                            <div class="portfolio-info">
-                                <h3>App Prototyping</h3>
-                                <p>Kunde C</p>
-                            </div>
-                        </a>
-                    </article>
+        <!-- 2. Was ich biete (Leistungen) -->
+        <section id="services">
+            <div class="container">
+                <h2>Was ich biete</h2>
+                <p class="intro-text scroll-animate">Ich unterstütze Marken und Agenturen mit Design, das wirkt – visuell und konzeptionell. Schnell umsetzbar, nachhaltig gedacht.</p>
+                <div class="services-grid">
+                    <!-- Service-Items bleiben gleich -->
+                    <div class="service-item scroll-animate interactive-element" data-delay="0">
+                        <span class="iconify icon" data-icon="ph:lightbulb-bold"></span>
+                        <h3>Markenentwicklung</h3>
+                        <p>Tonalität, Werte, visuelles Setup</p>
+                    </div>
+                    <div class="service-item scroll-animate interactive-element" data-delay="100">
+                        <span class="iconify icon" data-icon="ph:monitor-bold"></span>
+                        <h3>Web- & Screendesign</h3>
+                        <p>Figma, HTML-Prototypen, UX-Wireframes</p>
+                    </div>
+                    <div class="service-item scroll-animate interactive-element" data-delay="200">
+                        <span class="iconify icon" data-icon="ph:magic-wand-bold"></span>
+                        <h3>KI-Design-Support</h3>
+                        <p>Bild-KI, SVG-Code, Content-Gestaltung</p>
+                    </div>
+                    <div class="service-item scroll-animate interactive-element" data-delay="0">
+                        <span class="iconify icon" data-icon="ph:image-square-bold"></span>
+                        <h3>Grafik & Visuals</h3>
+                        <p>Key Visuals, Icons, Illustrationen</p>
+                    </div>
+                    <div class="service-item scroll-animate interactive-element" data-delay="100">
+                        <span class="iconify icon" data-icon="ph:layout-bold"></span>
+                        <h3>Corporate Design</h3>
+                        <p>Layouts, Templates, Manuals</p>
+                    </div>
+                    <div class="service-item scroll-animate interactive-element" data-delay="200">
+                        <span class="iconify icon" data-icon="ph:envelope-simple-bold"></span>
+                        <h3>Newsletter & Kampagnen</h3>
+                        <p>Gestaltung für Inxmail & Co.</p>
+                    </div>
                 </div>
-             </div>
+            </div>
         </section>
 
-        <!-- Divider 2 ENTFERNT -->
-
-        <!-- Über Mich Sektion -->
-        <section id="about" class="section theme-blue about-section">
-             <div class="section-content-wrapper">
-                <h2 class="section-title about-title" data-animate="fade-left">Der Kopf<br>dahinter.</h2>
-                <div class="skills-icons" data-animate="fade-up" data-delay="0.1">
-                    <div class="skill-item" data-animate="pop-in" data-delay="0.2">
-                        <iconify-icon icon="ph:pen-nib-bold"></iconify-icon>
-                        <span>Konzept & Idee</span>
+        <!-- 3. Wie ich arbeite (Methodik + USP) -->
+        <section id="methodology">
+            <div class="container">
+                <h2>Wie ich arbeite</h2>
+                <p class="intro-text scroll-animate">
+                    Ich bin schnell – aber nie überstürzt.<br>
+                    Ich arbeite mit Struktur – aber ohne starre Prozesse.<br>
+                    Ich setze KI ein – aber nur dort, wo sie Sinn macht.
+                </p>
+                <div class="principles-grid">
+                    <!-- Principle-Items bleiben gleich -->
+                     <div class="principle-item scroll-animate interactive-element" data-delay="0">
+                        <h3>Verständnis vor Gestaltung</h3>
+                        <p>Jedes Projekt beginnt mit einem tiefen Eintauchen in deine Ziele. Erst wenn die "Warum"-Frage geklärt ist, beginne ich mit der visuellen Umsetzung. Das spart Zeit und liefert Ergebnisse, die wirklich wirken.</p>
                     </div>
-                    <div class="skill-item" data-animate="pop-in" data-delay="0.3">
-                        <iconify-icon icon="ph:paint-brush-household-bold"></iconify-icon>
-                        <span>Visuelles Design</span>
+                    <div class="principle-item scroll-animate interactive-element" data-delay="100">
+                        <h3>Effizienz durch Tools</h3>
+                        <p>Ich nutze moderne Tools wie Figma, HTML-Prototypen und KI-Assistenz nicht als Selbstzweck, sondern um Prozesse zu beschleunigen und maximale Präzision zu erreichen. Das bedeutet schnellere Iterationen und fokussierte Ergebnisse.</p>
                     </div>
-                    <div class="skill-item" data-animate="pop-in" data-delay="0.4">
-                        <iconify-icon icon="ph:strategy-bold"></iconify-icon>
-                        <span>Markenstrategie</span>
-                    </div>
-                     <div class="skill-item" data-animate="pop-in" data-delay="0.5">
-                         <iconify-icon icon="ph:device-mobile-bold"></iconify-icon>
-                         <span>Digital & UI</span>
+                    <div class="principle-item scroll-animate interactive-element" data-delay="200">
+                        <h3>Design mit Haltung</h3>
+                        <p>Meine Arbeit ist immer zielgerichtet und hat eine klare Botschaft. Ich glaube an Design, das nicht nur gut aussieht, sondern auch strategische Ziele unterstützt und eine nachhaltige Wirkung erzielt. Qualität über Quantität.</p>
                     </div>
                 </div>
-                <div class="about-text" data-animate="fade-up" data-delay="0.6">
-                    <p>Ich bin Simon. Mein Ziel ist es, Design zu schaffen, das nicht nur gut aussieht, sondern auch funktioniert und eine Geschichte erzählt. Ich glaube an die Kraft klarer Ideen und mutiger visueller Umsetzungen.</p>
+                <div class="button-wrapper scroll-animate" data-delay="300">
+                    <a href="#about" class="button button-primary interactive-element">Jetzt kennenlernen</a>
                 </div>
-             </div>
+            </div>
         </section>
 
-        <!-- Divider 3 ENTFERNT -->
-
-        <!-- Kontakt Sektion -->
-        <section id="contact" class="section theme-light contact-section">
-            <div class="section-content-wrapper">
-                <h2 class="section-title contact-title" data-animate="fade-up">Let's <span class="connect-word">Connect.</span></h2>
-                <div class="contact-info" data-animate="fade-up" data-delay="0.2">
-                    <p class="contact-prompt">Bereit für das nächste Projekt?</p>
-                    <a href="mailto:hallo@simonp-design.de" class="contact-link">hallo@simonp-design.de</a>
-                    <div class="social-icons-contact">
-                        <a href="#" aria-label="LinkedIn" data-animate="pop-in" data-delay="0.4"><iconify-icon icon="mdi:linkedin"></iconify-icon></a>
-                        <a href="#" aria-label="Behance" data-animate="pop-in" data-delay="0.5"><iconify-icon icon="mdi:behance"></iconify-icon></a>
-                        <a href="#" aria-label="Instagram" data-animate="pop-in" data-delay="0.6"><iconify-icon icon="mdi:instagram"></iconify-icon></a>
+        <!-- 4. Beispiele & Referenzen -->
+        <section id="references">
+            <div class="container">
+                <h2>Beispiele & Referenzen</h2>
+                <div class="references-grid">
+                    <!-- Case-Study-Items bleiben gleich, evtl. img src anpassen -->
+                    <div class="case-study-item scroll-animate interactive-element" data-delay="0">
+                        <img src="https://cdn.midjourney.com/51917ced-c908-4c99-8864-38fb941d8f80/0_2.png" alt="Mockup eines digitalen Produkts">
+                        <div class="case-study-content">
+                            <h3>Digitales Projekt (Beispiel 1)</h3>
+                            <strong>Herausforderung → Lösung:</strong> Die Komplexität einer Dienstleistung einfach und ansprechend darstellen. Entwicklung eines klaren User-Flows und einer intuitiven Benutzeroberfläche.
+                            <p><strong>Ergebnis:</strong> Signifikante Steigerung der Nutzerinteraktion und positive Resonanz auf das Design.</p>
+                        </div>
+                    </div>
+                    <div class="case-study-item scroll-animate interactive-element" data-delay="100">
+                        <img src="https://cdn.midjourney.com/0309c81b-f370-4f7c-9912-186390cf1add/0_0.png" alt="Konzept für Markenidentität (Platzhalter)">
+                        <div class="case-study-content">
+                            <h3>Markenidentität (Beispiel 2)</h3>
+                            <strong>Herausforderung → Lösung:</strong> Eine etablierte Marke visuell erneuern und für neue Zielgruppen attraktiv machen. Erarbeitung eines frischen Corporate Designs und markanter Key Visuals.
+                            <p><strong>Ergebnis:</strong> Stärkere Markenwiedererkennung und erfolgreiche Positionierung im Markt.</p>
+                        </div>
+                    </div>
+                    <div class="case-study-item scroll-animate interactive-element" data-delay="200">
+                        <img src="https://cdn.midjourney.com/73ead6bb-fe42-4971-aa4a-56b6a4ee5724/0_2.png" alt="Illustration eines Kreativprojekts">
+                        <div class="case-study-content">
+                            <h3>Kreativprojekt (Beispiel 3)</h3>
+                            <strong>Herausforderung → Lösung:</strong> Eine abstrakte Idee in eine greifbare visuelle Erzählung übersetzen. Erstellung von ansprechenden Illustrationen und grafischen Elementen, die die Botschaft verstärken.
+                            <p><strong>Ergebnis:</strong> Überzeugende Kommunikation komplexer Inhalte und begeisterte Kundenreaktionen.</p>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- 5. Über mich (Simon) -->
+        <section id="about">
+            <div class="container">
+                <h2>Über mich (Simon)</h2>
+                <div class="about-content">
+                    <img src="https://cdn.midjourney.com/e27dc7be-fbd7-458b-85e9-15ca1bf0e1f5/0_3.png" alt="Portrait Simon Design (Platzhalter)" class="scroll-animate circle-image" data-delay="0">
+                    <p class="scroll-animate" data-delay="100">
+                        Ich bin Simon – Designer mit technischem Background, strategischem Blick und schnellem Kopf.
+                        Ich verbinde klassische Gestaltung mit modernen Tools und einer klaren Haltung:
+                        Gestaltung ist kein Selbstzweck – sie muss funktionieren.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Kontakt-CTA -->
+        <section id="contact">
+            <div class="container">
+                <h2 class="scroll-animate">Du brauchst jemanden, der's durchdenkt und umsetzt?</h2>
+                <p class="subline scroll-animate" data-delay="100">Lass uns sprechen – und sehen, wie ich dein Projekt nach vorne bringen kann.</p>
+                <a href="#" id="contact-cta-button" class="button button-primary scroll-animate interactive-element" data-delay="200">Unverbindlich Kontakt aufnehmen</a>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer">
-         <div class="footer-content">
-            <p>© <span id="year"></span> Simon P. Kreatives Design.</p>
-         </div>
+    <footer>
+        <div class="footer-nav">
+            <a href="#services" class="interactive-element">Leistungen</a>
+            <a href="#methodology" class="interactive-element">Arbeitsweise</a>
+            <a href="#references" class="interactive-element">Referenzen</a>
+            <a href="#about" class="interactive-element">Über mich</a>
+        </div>
+         <a href="#" id="footer-contact-button" class="button-primary-footer interactive-element">Kontakt</a>
+        <div class="copyright">
+            &copy; 2025 Simon Design. All rights reserved.
+        </div>
     </footer>
 
-    <script src="scripts.js"></script>
+    <!-- Sticky Music Player Controls -->
+    <div id="sticky-music-player-controls">
+        <button id="play-pause-btn" class="interactive-element music-player-control-button" aria-label="Abspielen/Pause">
+            <span class="iconify" data-icon="ph:play-fill"></span>
+        </button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5" class="interactive-element" aria-label="Lautstärkeregler">
+        <button id="mute-btn" class="interactive-element music-player-control-button" aria-label="Stummschalten">
+            <span class="iconify" data-icon="ph:speaker-high-fill"></span>
+        </button>
+    </div>
+
+    <script>
+        // Deklaration der globalen Audio-Variablen
+        let audioContext;
+        let analyser;
+        let source;
+        let dataArray;
+        let bufferLength;
+        let isAudioInitialized = false; // Flag, um Initialisierung zu verfolgen
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('main-header');
+            const heroSection = document.getElementById('hero');
+            // const heroContent = document.querySelector('#hero .hero-content'); // Wird in Animation verwendet
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const mobileNav = document.querySelector('.mobile-nav');
+
+            const audio = document.getElementById('myAudio');
+            const canvas = document.getElementById('audioVisualizer');
+            const ctx = canvas.getContext('2d');
+
+            const stickyPlayerControls = document.getElementById('sticky-music-player-controls');
+            const stickyPlayPauseBtn = document.getElementById('play-pause-btn');
+            const stickyVolumeSlider = document.getElementById('volume-slider');
+            const stickyMuteBtn = document.getElementById('mute-btn');
+
+            const cursorDot = document.querySelector('.custom-cursor-dot');
+            const cursorRing = document.querySelector('.custom-cursor-ring');
+            const interactiveElements = document.querySelectorAll('a, button, input[type="range"], .interactive-element, .music-player-control-button');
+
+            document.addEventListener('mousemove', (e) => {
+                // Die Transformationen bleiben gleich, aber wir verwenden clientX/Y direkt
+                cursorDot.style.left = `${e.clientX}px`;
+                cursorDot.style.top = `${e.clientY}px`;
+                cursorRing.style.left = `${e.clientX}px`;
+                cursorRing.style.top = `${e.clientY}px`;
+
+                if (!cursorDot.classList.contains('visible')) {
+                    cursorDot.classList.add('visible');
+                    cursorRing.classList.add('visible');
+                }
+            });
+
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorDot.classList.add('hover');
+                    cursorRing.classList.add('hover');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorDot.classList.remove('hover');
+                    cursorRing.classList.remove('hover');
+                });
+            });
+
+            const observerOptions = {
+                root: null,
+                rootMargin: `-${getComputedStyle(document.documentElement).getPropertyValue('--header-height-desktop').trim()} 0px 0px 0px`, // Header-Höhe berücksichtigen
+                threshold: 0
+            };
+
+            const headerObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    // Wenn Hero-Sektion NICHT mehr (oder kaum noch) oben im Viewport ist (also drüber gescrollt wurde)
+                    if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+                        header.classList.add('sticky');
+                    } else {
+                        header.classList.remove('sticky');
+                    }
+                });
+            }, observerOptions);
+
+            if (heroSection) {
+                headerObserver.observe(heroSection);
+            }
+
+
+            hamburgerMenu.addEventListener('click', () => {
+                const isOpen = hamburgerMenu.classList.toggle('open');
+                mobileNav.classList.toggle('open');
+                document.body.style.overflow = isOpen ? 'hidden' : ''; // Scroll sperren/entsperren
+
+                if (isOpen) {
+                    anime({
+                        targets: '.mobile-nav a',
+                        opacity: [0, 1],
+                        translateY: [20, 0],
+                        delay: anime.stagger(100, {start: 200}),
+                        easing: 'easeOutQuad'
+                    });
+                }
+            });
+
+            mobileNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburgerMenu.classList.remove('open');
+                    mobileNav.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // --- Hero-Sektion Initial-Animation ---
+            // Selektoren für Anime.js, stellen Sie sicher, dass sie existieren
+            const heroContentForAnim = document.querySelector('#hero .hero-content');
+            const heroStaggerIn = document.querySelectorAll('#hero .stagger-in');
+            const heroFadeInUp = document.querySelectorAll('#hero .fade-in-up');
+
+            if (heroContentForAnim) {
+                 anime.timeline({
+                    easing: 'easeOutExpo',
+                    duration: 1200
+                })
+                .add({
+                    targets: heroContentForAnim,
+                    opacity: [0, 1],
+                    translateY: [50, 0],
+                    duration: 800,
+                    offset: 0
+                })
+                .add({
+                    targets: heroStaggerIn.length > 0 ? heroStaggerIn : null,
+                    translateY: [30, 0],
+                    opacity: [0, 1],
+                    delay: anime.stagger(150, {start: 300}),
+                    offset: '-=600'
+                }, '-=600') // Korrekte Offset-Syntax
+                .add({
+                    targets: heroFadeInUp.length > 0 ? heroFadeInUp : null,
+                    translateY: [20, 0],
+                    opacity: [0, 1],
+                    delay: anime.stagger(100),
+                    offset: '-=400'
+                }, '-=400'); // Korrekte Offset-Syntax
+            }
+
+
+            const animateOnScrollElements = document.querySelectorAll('.scroll-animate');
+            const sectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: entry.target,
+                            translateY: [parseFloat(entry.target.dataset.translateYStart || 30), 0],
+                            opacity: [0, 1],
+                            easing: 'easeOutQuad',
+                            duration: 800,
+                            delay: parseFloat(entry.target.dataset.delay) || 0
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.15 // Etwas früher auslösen
+            });
+
+            animateOnScrollElements.forEach(element => {
+                sectionObserver.observe(element);
+            });
+
+            document.querySelectorAll('.service-item').forEach(item => {
+                const icon = item.querySelector('.iconify');
+                item.addEventListener('mouseenter', () => {
+                    if (icon) anime({ targets: icon, scale: [1, 1.1], rotate: '5deg', easing: 'easeOutElastic(1, .5)', duration: 700 });
+                });
+                item.addEventListener('mouseleave', () => {
+                     if (icon) anime({ targets: icon, scale: [1.1, 1], rotate: '0deg', easing: 'easeOutQuad', duration: 300 });
+                });
+            });
+
+            const circleImage = document.querySelector('.circle-image');
+            if (circleImage) {
+                // Scroll-Animation für circleImage wird bereits von .scroll-animate gehandhabt
+                // Keine zusätzliche Logik hier nötig, es sei denn, es gibt spezielle Anforderungen.
+            }
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function initializeAudioContext() {
+                if (isAudioInitialized || !audio) return; // Nur einmal initialisieren oder wenn Audio nicht da
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    source = audioContext.createMediaElementSource(audio);
+                    analyser = audioContext.createAnalyser();
+
+                    source.connect(analyser);
+                    analyser.connect(audioContext.destination);
+
+                    analyser.fftSize = 2048; // Moderate Größe für Performance
+                    bufferLength = analyser.frequencyBinCount; // Korrekte Länge für Frequenzdaten
+                    dataArray = new Uint8Array(bufferLength);
+                    isAudioInitialized = true; // Setze Flag
+                    console.log('AudioContext initialized successfully.');
+                } catch (e) {
+                    console.error('Error initializing AudioContext:', e);
+                    isAudioInitialized = false; // Bei Fehler zurücksetzen
+                }
+            }
+
+
+            function drawVisualizer() {
+                requestAnimationFrame(drawVisualizer);
+                if (!isAudioInitialized || !analyser || !dataArray) return;
+
+                analyser.getByteTimeDomainData(dataArray); // Zeitdomänendaten für Wellenform
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = 'rgba(0, 0, 255, 0.3)';
+                ctx.beginPath();
+
+                const sliceWidth = canvas.width * 1.0 / bufferLength;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    const v = dataArray[i] / 128.0; // Normalisieren
+                    const y = v * canvas.height / 2;
+
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                    x += sliceWidth;
+                }
+                ctx.lineTo(canvas.width, canvas.height / 2);
+                ctx.stroke();
+            }
+            
+            // Stellt sicher, dass der AudioContext bei der ersten Benutzerinteraktion gestartet wird,
+            // falls Autoplay blockiert wurde.
+            function ensureAudioContextResumed() {
+                if (audioContext && audioContext.state === 'suspended') {
+                    audioContext.resume().then(() => {
+                        console.log('AudioContext resumed on user interaction.');
+                    }).catch(e => console.error('Error resuming AudioContext:', e));
+                }
+            }
+            
+            // Listener für Benutzerinteraktionen, um AudioContext zu starten/fortzusetzen
+            //['click', 'touchstart', 'keydown'].forEach(eventType => {
+            //    document.body.addEventListener(eventType, ensureAudioContextResumed, { once: true });
+            //});
+
+
+            audio.addEventListener('play', () => {
+                if (!isAudioInitialized) {
+                    initializeAudioContext();
+                }
+                 ensureAudioContextResumed(); // Wichtig bei 'play' Event
+                if (isAudioInitialized) { // Nur starten, wenn Initialisierung erfolgreich war
+                    console.log('Audio is playing, starting visualizer...');
+                    drawVisualizer();
+                }
+                 stickyPlayPauseBtn.innerHTML = '<span class="iconify" data-icon="ph:pause-fill"></span>';
+            });
+             audio.addEventListener('pause', () => {
+                stickyPlayPauseBtn.innerHTML = '<span class="iconify" data-icon="ph:play-fill"></span>';
+            });
+            audio.addEventListener('ended', () => {
+                stickyPlayPauseBtn.innerHTML = '<span class="iconify" data-icon="ph:play-fill"></span>';
+            });
+
+
+            // Versuche, Audio nach einer kurzen Verzögerung zu laden und abzuspielen,
+            // um dem DOM Zeit zu geben, vollständig bereit zu sein.
+            setTimeout(() => {
+                if(audio.readyState >= 2) { // HAVE_CURRENT_DATA oder höher
+                    attemptAutoplay();
+                } else {
+                    audio.addEventListener('canplay', attemptAutoplay, { once: true });
+                    audio.load(); // Starte das Laden, falls noch nicht geschehen
+                }
+            }, 500); // Kurze Verzögerung
+
+            function attemptAutoplay() {
+                if (!audio) return;
+                audio.play().then(() => {
+                    console.log('Autoplay successful.');
+                     if (!isAudioInitialized) initializeAudioContext(); // Initialisiere hier, falls noch nicht geschehen
+                     if (isAudioInitialized) drawVisualizer();
+                }).catch(error => {
+                    console.warn('Autoplay was blocked:', error);
+                    // Das Play-Icon bleibt auf "Play", da Autoplay fehlgeschlagen ist.
+                    // Benutzer muss manuell starten.
+                });
+            }
+
+
+            let isMuted = false;
+            let lastVolume = parseFloat(stickyVolumeSlider.value);
+
+            setTimeout(() => {
+                stickyPlayerControls.classList.add('visible');
+            }, 1500);
+
+            stickyPlayPauseBtn.addEventListener('click', () => {
+                 ensureAudioContextResumed(); // Wichtig vor manuellem Play/Pause
+                if (!isAudioInitialized) { // Initialisiere, falls noch nicht geschehen (z.B. wenn Autoplay fehlschlug)
+                    initializeAudioContext();
+                }
+
+                if (audio.paused) {
+                    audio.play().catch(e => console.error("Error playing audio:", e));
+                } else {
+                    audio.pause();
+                }
+            });
+
+            stickyVolumeSlider.addEventListener('input', () => {
+                const newVolume = parseFloat(stickyVolumeSlider.value);
+                audio.volume = newVolume;
+                if (newVolume > 0) {
+                    isMuted = false; // Entmuten, wenn Regler bewegt wird und nicht 0 ist
+                }
+                lastVolume = newVolume;
+                updateVolumeIcon(newVolume);
+            });
+
+            stickyMuteBtn.addEventListener('click', () => {
+                ensureAudioContextResumed();
+                isMuted = !isMuted;
+                if (isMuted) {
+                    lastVolume = audio.volume; // Speichere aktuelle Lautstärke, falls sie nicht 0 ist
+                    audio.volume = 0;
+                    stickyVolumeSlider.value = 0;
+                } else {
+                    // Stelle die Lautstärke auf den zuletzt bekannten Wert wieder her,
+                    // aber nicht, wenn dieser 0 war. In dem Fall 0.5 als Standard.
+                    const restoreVolume = (lastVolume > 0) ? lastVolume : 0.5;
+                    audio.volume = restoreVolume;
+                    stickyVolumeSlider.value = restoreVolume;
+                }
+                updateVolumeIcon(audio.volume);
+            });
+
+            function updateVolumeIcon(volume) {
+                const iconElement = stickyMuteBtn.querySelector('.iconify');
+                if (!iconElement) return;
+
+                if (isMuted || volume === 0) {
+                    iconElement.setAttribute('data-icon', 'ph:speaker-slash-fill');
+                } else if (volume > 0.5) {
+                    iconElement.setAttribute('data-icon', 'ph:speaker-high-fill');
+                } else { // volume > 0 && volume <= 0.5
+                    iconElement.setAttribute('data-icon', 'ph:speaker-low-fill');
+                }
+            }
+            
+            // Initiale Einrichtung
+            if (audio) {
+                 audio.volume = parseFloat(stickyVolumeSlider.value);
+                 updateVolumeIcon(audio.volume);
+            }
+
+            // E-Mail Obfuskation
+            function generateMailtoLink(event) {
+                event.preventDefault(); // Verhindert Standard-Linkverhalten
+                const user = 'simonpe';
+                const domain = 'outlook.de';
+                window.location.href = `mailto:${user}@${domain}`;
+            }
+
+            const contactCtaButton = document.getElementById('contact-cta-button');
+            if (contactCtaButton) {
+                contactCtaButton.addEventListener('click', generateMailtoLink);
+            }
+
+            const footerContactButton = document.getElementById('footer-contact-button');
+            if (footerContactButton) {
+                footerContactButton.addEventListener('click', generateMailtoLink);
+            }
+
+        });
+    </script>
 </body>
 </html>
